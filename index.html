@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hangman Game</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        .game-box {
+            background-color: #ffffff;
+            width: 400px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        input {
+            padding: 8px;
+            width: 50px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        button {
+            padding: 8px 15px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .message {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="game-box">
+    <h2>Hangman Game</h2>
+
+    <p id="wordDisplay">_ _ _ _ _</p>
+    <p>Incorrect guesses left: <span id="guessesLeft">6</span></p>
+
+    <input type="text" id="letterInput" maxlength="1">
+    <button onclick="guessLetter()">Guess</button>
+
+    <p class="message" id="message"></p>
+</div>
+
+<script>
+    // Predefined word list
+    const words = ["apple", "banana", "grape", "orange", "mango"];
+
+    // Random word selection
+    let selectedWord = words[Math.floor(Math.random() * words.length)];
+    let guessedLetters = [];
+    let incorrectGuesses = 6;
+
+    function displayWord() {
+        let display = "";
+        for (let letter of selectedWord) {
+            if (guessedLetters.includes(letter)) {
+                display += letter + " ";
+            } else {
+                display += "_ ";
+            }
+        }
+        document.getElementById("wordDisplay").textContent = display.trim();
+    }
+
+    function guessLetter() {
+        let input = document.getElementById("letterInput");
+        let letter = input.value.toLowerCase();
+        input.value = "";
+
+        if (letter === "" || guessedLetters.includes(letter)) {
+            return;
+        }
+
+        guessedLetters.push(letter);
+
+        if (!selectedWord.includes(letter)) {
+            incorrectGuesses--;
+        }
+
+        document.getElementById("guessesLeft").textContent = incorrectGuesses;
+        displayWord();
+        checkGameStatus();
+    }
+
+    function checkGameStatus() {
+        if (incorrectGuesses === 0) {
+            document.getElementById("message").textContent =
+                "Game Over! The word was: " + selectedWord;
+        } else if (!document.getElementById("wordDisplay").textContent.includes("_")) {
+            document.getElementById("message").textContent =
+                "Congratulations! You won!";
+        }
+    }
+
+    // Initial display
+    displayWord();
+</script>
+
+</body>
+</html>
