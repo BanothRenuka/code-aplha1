@@ -1,0 +1,23 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    text-align: center;
+}
+
+.game-box {
+    width: 400px;
+    margin: auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.word {
+    font-size: 24px;
+    letter-spacing: 5px;
+}
+
+.message {
+    font-weight: bold;
+    margin-top: 10px;
+}
